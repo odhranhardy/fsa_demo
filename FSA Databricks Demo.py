@@ -44,7 +44,7 @@ print("Welcome to your new Databricks notebook!")
 
 # COMMAND ----------
 
-# DBTITLE 1,Creating and Filtering a Simple DataFrame in R
+# DBTITLE 1,Selecting Data Based on Age in R DataFrame
 # MAGIC %r
 # MAGIC # Create a small dataset
 # MAGIC data <- data.frame(
@@ -72,7 +72,8 @@ print("Welcome to your new Databricks notebook!")
 
 # COMMAND ----------
 
-# Python cell
+# DBTITLE 1,Filtering DataFrame Rows Based on Age in Python
+
 import pandas as pd
 
 # Create a small dataset
@@ -92,6 +93,7 @@ selected_data = data[data['Age'] > 30]
 # View the selected data
 print(selected_data)
 
+
 # COMMAND ----------
 
 # MAGIC %md
@@ -100,6 +102,7 @@ print(selected_data)
 # COMMAND ----------
 
 # Missing import
+from pyspark.sql.functions import col
 
 
 # Create a small dataset
@@ -127,13 +130,16 @@ selected_data = df.filter(col("Age") > 30)
 selected_data.show()
 
 # Register the Dateframe as a TempView called people
+df.createOrReplaceTempView("people")
 
 
 
 # A Function to filer a dataframe, to only show people whose names begin with a "D"
+def filter_people(df):
+    return df.filter(col("Name").startswith("D"))
 
 
-#filter_people(df).show()
+filter_people(df).show()
 
 
 
@@ -146,7 +152,7 @@ selected_data.show()
 
 # MAGIC %sql
 # MAGIC -- SQL cell
-# MAGIC SELECT * FROM people
+# MAGIC SELECT * FROM people 
 # MAGIC
 
 # COMMAND ----------
@@ -180,13 +186,15 @@ result.show()
 
 # COMMAND ----------
 
- # Use the %run magic command to run another notebook\n",
-%run ./env_setup.py
+# MAGIC %run ./env_setup.py
 
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC -- SELECT everything from the 
+# MAGIC -- get all the data from our new table dev_catalog.raw.commodity_tests
+# MAGIC
+# MAGIC
+# MAGIC
 
 # COMMAND ----------
 
