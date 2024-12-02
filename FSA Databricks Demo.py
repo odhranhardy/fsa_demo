@@ -30,7 +30,6 @@
 # Create a new notebook and navigate through its interface
 print("Welcome to your new Databricks notebook!")
 
-
 # COMMAND ----------
 
 # MAGIC %md
@@ -45,6 +44,7 @@ print("Welcome to your new Databricks notebook!")
 
 # COMMAND ----------
 
+# DBTITLE 1,Creating and Filtering a Simple DataFrame in R
 # MAGIC %r
 # MAGIC # Create a small dataset
 # MAGIC data <- data.frame(
@@ -92,7 +92,6 @@ selected_data = data[data['Age'] > 30]
 # View the selected data
 print(selected_data)
 
-
 # COMMAND ----------
 
 # MAGIC %md
@@ -132,8 +131,6 @@ selected_data.show()
 
 
 # A Function to filer a dataframe, to only show people whose names begin with a "D"
-def filter_people(df):
-    return df.filter(col("Name").startswith("D"))
 
 
 #filter_people(df).show()
@@ -161,44 +158,9 @@ def filter_people(df):
 
 # COMMAND ----------
 
-# Python cell to create a DataFrame
-from pyspark.sql import SparkSession
-
-spark = SparkSession.builder.appName("example").getOrCreate()
-data = [("Alice", 25), ("Bob", 30), ("Carol", 35)]
-df = spark.createDataFrame(data, ["Name", "Age"])
-df.show()
-
-# COMMAND ----------
-
-# MAGIC %sql
-# MAGIC -- SQL cell to query the DataFrame
-# MAGIC SELECT * FROM df WHERE Age > 30
-# MAGIC
-
-# COMMAND ----------
-
 # Push the results back into a DataFrame using Python
-result = spark.sql("SELECT * FROM df WHERE Age > 30")
+result = spark.sql("SELECT * FROM people")
 result.show()
-
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC # Run Notebook Commands
-# MAGIC You can run one notebook from another using the `%run` magic command, which is useful for modularizing code.
-# MAGIC
-
-# COMMAND ----------
-
- # Use the %run magic command to run another notebook\n",
-%run ./path/to/another/notebook
-
-# COMMAND ----------
-
-# MAGIC %sql
-# MAGIC SELECT * FROM 
 
 # COMMAND ----------
 
@@ -212,13 +174,19 @@ result.show()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC # Connecting to Clusters
-# MAGIC Clusters are the computational resources in Databricks. You can create and configure clusters to run your notebooks.
+# MAGIC # Run Notebook Commands
+# MAGIC You can run one notebook from another using the `%run` magic command, which is useful for modularizing code.
 # MAGIC
-# MAGIC - Create and configure a cluster
-# MAGIC - Connect to different clusters for different purposes
-# MAGIC
-# MAGIC
+
+# COMMAND ----------
+
+ # Use the %run magic command to run another notebook\n",
+%run ./env_setup.py
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC -- SELECT everything from the 
 
 # COMMAND ----------
 
@@ -231,6 +199,17 @@ result.show()
 # MAGIC %sql
 # MAGIC -- Query data within the catalog\n",
 # MAGIC "SELECT * FROM catalog_name.schema_name.table_name
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC # Connecting to Clusters
+# MAGIC Clusters are the computational resources in Databricks. You can create and configure clusters to run your notebooks.
+# MAGIC
+# MAGIC - Create and configure a cluster
+# MAGIC - Connect to different clusters for different purposes
+# MAGIC
+# MAGIC
 
 # COMMAND ----------
 
